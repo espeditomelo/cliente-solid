@@ -22,14 +22,12 @@ public class ClienteRequestDTO {
     @CPF(message = "CPF deve ser válido")
     private String cpf;
 
+    @NotBlank(message = "Telefone é obrigatório")
+    @Size(min = 10, max = 20, message = "Telefone deve ter entre 10 e 20 caracteres")
     private String telefone;
 
     @Past(message = "Data de nascimento deve ser no passado")
     private LocalDate dataNascimento;
-
-    public @NotBlank(message = "Nome é obrigatório") @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres") String getNome() {
-        return nome;
-    }
 
     public ClienteRequestDTO() {
     }
@@ -42,23 +40,27 @@ public class ClienteRequestDTO {
         this.dataNascimento = dataNascimento;
     }
 
-    public void setNome(@NotBlank(message = "Nome é obrigatório") @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres") String nome) {
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public @NotBlank(message = "Email é obrigatório") @Email(message = "Email deve ser válido") String getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(@NotBlank(message = "Email é obrigatório") @Email(message = "Email deve ser válido") String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public @NotBlank(message = "CPF é obrigatório") @CPF(message = "CPF deve ser válido") String getCpf() {
+    public String getCpf() {
         return cpf;
     }
 
-    public void setCpf(@NotBlank(message = "CPF é obrigatório") @CPF(message = "CPF deve ser válido") String cpf) {
+    public void setCpf(String cpf) {
         this.cpf = cpf;
     }
 
@@ -70,11 +72,11 @@ public class ClienteRequestDTO {
         this.telefone = telefone;
     }
 
-    public @Past(message = "Data de nascimento deve ser no passado") LocalDate getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(@Past(message = "Data de nascimento deve ser no passado") LocalDate dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 }
