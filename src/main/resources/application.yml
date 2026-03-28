@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: cliente
+
+  # PostgreSQL
+  datasource:
+    url: jdbc:postgresql://localhost:5432/clientedb
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+
+  # JPA/Hibernate
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          batch_size: 20
+        default_schema: public
+    # Configuração opcional para performance
+    open-in-view: false
+
+# Porta da aplicação
+server:
+  port: ${PORT:8080}  # Permite variável de ambiente com fallback para 8080
+
+# Logging
+logging:
+  level:
+    root: WARN
+    com.projeto.cliente: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE  # Mostra valores dos parâmetros
+
+  file:
+    name: logs/cliente-api.log
+    max-size: 10MB  # Tamanho máximo do arquivo de log
+    max-history: 30  # Dias de histórico
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+
+  # Configuração opcional para logback
+  #config: classpath:logback-spring.xml
+
+---
+# Configurações específicas para o perfil de produção
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: jdbc:postgresql://prod-db-host:5432/clientedb
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    show-sql: false  # Desativa logs de SQL em produção
+    hibernate:
+      ddl-auto: validate  # Não permite alterações automáticas no schema
+
+server:
+  port: ${PORT:8080}  # Mantém configuração de porta
+
+logging:
+  level:
+    com.projeto.cliente: INFO  # Mantém logs informativos para a aplicação
+    root: WARN
+    org.hibernate.SQL: WARN  # Reduz logs do Hibernate em produção
